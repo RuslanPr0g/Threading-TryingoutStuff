@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadingTryingoutStuff", "ThreadingTryingoutStuff\ThreadingTryingoutStuff.csproj", "{F567481C-5D75-45EC-A6D2-7C51490181EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Threading", "ThreadingTryingoutStuff\Threading.csproj", "{F567481C-5D75-45EC-A6D2-7C51490181EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LockKeyword", "LockKeyword\LockKeyword.csproj", "{0B3AC51C-B87F-4617-BFC2-18A5D7420ED3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F567481C-5D75-45EC-A6D2-7C51490181EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F567481C-5D75-45EC-A6D2-7C51490181EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F567481C-5D75-45EC-A6D2-7C51490181EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B3AC51C-B87F-4617-BFC2-18A5D7420ED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B3AC51C-B87F-4617-BFC2-18A5D7420ED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B3AC51C-B87F-4617-BFC2-18A5D7420ED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B3AC51C-B87F-4617-BFC2-18A5D7420ED3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
