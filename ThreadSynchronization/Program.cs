@@ -9,20 +9,25 @@ namespace ThreadSynchronization
         private static readonly ManualResetEvent _mre = new(false);
         private static readonly AutoResetEvent _are = new(true);
         private static readonly Mutex _m = new();
-        private static readonly Semaphore _s = new(0, 1);
+        private static readonly Semaphore _s = new(1, 1);
 
         static void Main(string[] args)
         {
             // Lock covered in another project
 
+            Console.WriteLine("Monitor:");
             MonitorWork();
             Console.WriteLine(new string('-', 20));
+            Console.WriteLine("Manual:");
             ManualResetEventWork();
             Console.WriteLine(new string('-', 20));
+            Console.WriteLine("Auto:");
             AutoResetEventWork();
             Console.WriteLine(new string('-', 20));
+            Console.WriteLine("Mutex:");
             MutexWork();
             Console.WriteLine(new string('-', 20));
+            Console.WriteLine("Semaphore:");
             SemaphoreWork();
 
             Console.ReadKey();
@@ -124,11 +129,19 @@ namespace ThreadSynchronization
 
         static void SemaphoreWork()
         {
-
-
-            static void DoWork()
+            for (int i = 0; i < 5; i++)
             {
+                new Thread(Write).Start();
+            }
 
+            static void Write()
+            {
+                Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId} waiting to write...");
+                _s.WaitOne();
+                Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId} writing...");
+                Thread.Sleep(5000);
+                Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId} writing completed...");
+                _s.Release();
             }
         }
     }
