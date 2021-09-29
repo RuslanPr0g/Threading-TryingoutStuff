@@ -8,6 +8,8 @@ namespace ThreadSynchronization
         private static readonly object _locker = new();
         private static readonly ManualResetEvent _mre = new(false);
         private static readonly AutoResetEvent _are = new(true);
+        private static readonly Mutex _m = new();
+        private static readonly Semaphore _s = new(0, 1);
 
         static void Main(string[] args)
         {
@@ -82,6 +84,8 @@ namespace ThreadSynchronization
 
         static void AutoResetEventWork()
         {
+            // In AutoResetEventWork it's like WaitOne() and Reset() (in ManualResetEventWork) executated as a one atomic operation
+
             for (int i = 0; i < 5; i++)
             {
                 new Thread(Write).Start();
@@ -100,14 +104,28 @@ namespace ThreadSynchronization
 
         static void MutexWork()
         {
-            static void DoWork()
-            {
+            // mutex is around an OS while lock (Monitor) are about AppDoamin
 
+            for (int i = 0; i < 5; i++)
+            {
+                new Thread(Write).Start();
+            }
+
+            static void Write()
+            {
+                Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId} waiting to write...");
+                _m.WaitOne();
+                Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId} writing...");
+                Thread.Sleep(5000);
+                Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId} writing completed...");
+                _m.ReleaseMutex();
             }
         }
 
         static void SemaphoreWork()
         {
+
+
             static void DoWork()
             {
 
