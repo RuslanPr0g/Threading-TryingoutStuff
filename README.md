@@ -7,7 +7,7 @@ In the case of using several threads, you have to coordinate their actions, such
 <br /><br />
 The main reason for synchronization is the need to share among several or more common resource (shared resource), which can be available for one thread at a time.
 <br /><br />
-The synchronization contains the concept of blocking, by means of which the access control to the code block (critical section) is organized. When an object ((access synchronization object) is locked by one thread, the other threads cannot access to a locked code block (critical section). When the lock is released by one thread, the object (access synchronization object) becomes available for use in another thread.
+The synchronization contains the concept of blocking, by means of which the access control to the code block (critical section) is organized. When an object (access synchronization object) is locked by one thread, the other threads cannot access to a locked code block (critical section). When the lock is released by one thread, the object (access synchronization object) becomes available for use in another thread.
 <br /><br />
 The object of synchronization of access (access synchronization object) to a shared resource is an object that represents the resource being synchronized. In some cases they are provided with an instance of the resource itself or an arbitrary instance of the class used for comparison.
 <br /><br />
