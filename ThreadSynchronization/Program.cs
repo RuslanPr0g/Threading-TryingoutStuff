@@ -5,20 +5,22 @@ namespace ThreadSynchronization
 {
     class Program
     {
-        private static object _locker = new();
+        private static readonly object _locker = new();
+        private static readonly ManualResetEvent _mre = new(false);
+        private static readonly AutoResetEvent _are = new(true);
 
         static void Main(string[] args)
         {
             // Lock covered in another project
 
             MonitorWork();
-
-            ManualResetEvent();
-
-            AutoResetEvent();
-
+            Console.WriteLine(new string('-', 20));
+            ManualResetEventWork();
+            Console.WriteLine(new string('-', 20));
+            AutoResetEventWork();
+            Console.WriteLine(new string('-', 20));
             MutexWork();
-
+            Console.WriteLine(new string('-', 20));
             SemaphoreWork();
 
             Console.ReadKey();
@@ -44,28 +46,55 @@ namespace ThreadSynchronization
                 {
                     Console.WriteLine(e.Message);
                 }
-                finally // it's the benefit over lock
+                finally // it's a benefit over the lock
                 {
                     Monitor.Exit(_locker);
                 }
             }
         }
 
-        static void ManualResetEvent()
+        static void ManualResetEventWork()
         {
+            new Thread(Write).Start();
 
-
-            static void DoWork()
+            for (int i = 0; i < 5; i++)
             {
+                new Thread(Read).Start();
+            }
 
+            static void Write()
+            {
+                Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId} writing...");
+                _mre.Reset();
+                Thread.Sleep(5000);
+                Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId} writing completed...");
+                _mre.Set();
+            }
+
+            static void Read()
+            {
+                Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId} reading...");
+                _mre.WaitOne();
+                Thread.Sleep(2000);
+                Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId} reading completed...");
             }
         }
 
-        static void AutoResetEvent()
+        static void AutoResetEventWork()
         {
-            static void DoWork()
+            for (int i = 0; i < 5; i++)
             {
+                new Thread(Write).Start();
+            }
 
+            static void Write()
+            {
+                Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId} waiting to write...");
+                _are.WaitOne();
+                Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId} writing...");
+                Thread.Sleep(5000);
+                _are.Set();
+                Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId} writing completed...");
             }
         }
 
